@@ -1,13 +1,17 @@
 import { supabase } from "../config/supabaseClient.js";
 
 export const ProductModel = {
-  async getAll(categoryId) {
+  async getAll(categoryId, searchName) {
     let query = supabase
       .from("products")
       .select("id, sku, name, description, price, stock, category_id");
     
     if (categoryId) {
       query = query.eq("category_id", categoryId);
+    }
+    
+    if (searchName) {
+      query = query.ilike("name", `%${searchName}%`);
     }
 
     const { data, error } = await query;

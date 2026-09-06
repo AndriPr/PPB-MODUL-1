@@ -4,7 +4,8 @@ export const ProductController = {
   async getAll(req, res) {
     try {
       const categoryId = req.query.category_id;
-      const products = await ProductModel.getAll(categoryId);
+      const searchName = req.query.name;
+      const products = await ProductModel.getAll(categoryId, searchName);
       res.json(products);
     } catch (err) {
       res.status(500).json({ error: err.message });
